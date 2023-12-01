@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>Listeners</display-name>
+  
+  <servlet>
+  	<servlet-name>restTest</servlet-name>
+  	<servlet-class>com.listeners.rest.testController</servlet-class>
+	<load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>restTest</servlet-name>
+  	<url-pattern>/rest</url-pattern>
+  </servlet-mapping>
+  
+  
+	<!-- eCross SOAP Listener Servlet Start -->
+	<servlet>
+		<description>no description</description>
+		<display-name>eCross-SOAP RPC Router</display-name>
+		<servlet-name>soapTest</servlet-name>
+		<servlet-class>com.listeners.soap.Exporter</servlet-class>
+		<init-param>
+			<param-name>faultListener</param-name>
+			<param-value>org.apache.soap.server.DOMFaultListener</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>soapTest</servlet-name>
+		<url-pattern>/soapTest</url-pattern>
+	</servlet-mapping>
+	<!-- eCross SOAP Listener Servlet End -->-->
+  
+  
+  <servlet>
+    <servlet-name>servletTest</servlet-name>
+    <servlet-class>com.listeners.servlet.servletTest</servlet-class>
+    <init-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+	</init-param>
+	<load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>servletTest</servlet-name>
+    <url-pattern>/servletTest</url-pattern>
+  </servlet-mapping>
+  
+<!--   <servlet>
+  	<servlet-name>soapTest</servlet-name>
+  	<servlet-class>com.listeners.soap.Exporter</servlet-class>
+  	<load-on-startup>3</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>soapTest</servlet-name>
+  	<url-pattern>/soap</url-pattern>
+  </servlet-mapping>
+   -->
+  
+  <!-- cxf -->
+  <servlet>
+  	<servlet-name>cxfSet</servlet-name>
+  	<servlet-class>org.apache.cxf.transprot.servlet.CXFServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>cxfSet</servlet-name>
+  	<url-pattern>/cxfSet</url-pattern>
+  </servlet-mapping>
+  
+  
+  <welcome-file-list>
+    <!-- <welcome-file>index.html</welcome-file> -->
+    <welcome-file>index.htm</welcome-file>
+<!--     <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file> -->
+  </welcome-file-list>
+</web-app>

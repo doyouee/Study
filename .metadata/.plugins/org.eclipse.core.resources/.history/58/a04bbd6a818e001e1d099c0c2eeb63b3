@@ -1,0 +1,13 @@
+package com.listeners.soap;
+
+import javax.jws.WebService;
+
+@WebService(endpointInterface = "com.listeners.soap.EmployeeService")
+public class EmployeeServiceImpl implements EmployeeService {
+
+	public Employee getEmployeeById(String id) {
+		System.out.println("1 값이 제대로 들어오는지 : " + id);
+		return new Employee(id, "Hong Gill Dong");
+	}
+
+}
