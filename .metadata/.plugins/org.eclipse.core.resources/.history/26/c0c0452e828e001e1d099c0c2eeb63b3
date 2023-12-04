@@ -1,0 +1,8 @@
+package com.listeners.soap;
+
+import javax.jws.WebService;
+
+@WebService
+public interface EmployeeService {
+	public Employee getEmployeeById(String id);
+}

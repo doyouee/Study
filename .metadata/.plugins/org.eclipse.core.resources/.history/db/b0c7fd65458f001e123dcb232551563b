@@ -1,0 +1,23 @@
+package com.listeners.soap;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.xml.ws.Endpoint;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.listeners.soap.EmployeeServiceImpl;
+
+//@RestController
+//@RequestMapping(value = "/soap")
+@org.springframework.ws.server.endpoint.annotation.Endpoint
+public class Exporter {
+	public void test() {
+		System.out.println("soap soap soap");
+		Endpoint.publish("http://localhost:8080/soap", new EmployeeServiceImpl());
+	}
+}

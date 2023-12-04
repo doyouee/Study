@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:jaxws="http://cxf.apache.org/jaxws"
+ xsi:schemaLocation="
+http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+ <import resource="classpath:META-INF/cxf/cxf.xml" />
+ <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+ <import resource="classpath:META-INF/cxf/cxf-servlet.xml" /> 
+
+ <jaxws:endpoint 
+  id="deptProcess" 
+  implementor="net.jeong.pro.DeptProcessImpl" 
+  address="/DeptProcess" />
+   
+</beans>
+출처: https://jeong-pro.tistory.com/129 [기본기를 쌓는 정아마추어 코딩블로그:티스토리]

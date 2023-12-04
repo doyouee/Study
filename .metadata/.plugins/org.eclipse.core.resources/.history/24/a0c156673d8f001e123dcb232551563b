@@ -1,0 +1,95 @@
+package com.clients.soap;
+
+import java.net.URI;
+import java.net.URL;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.Name;
+import javax.xml.soap.SOAPConnection;
+import javax.xml.soap.SOAPConnectionFactory;
+import javax.xml.soap.SOAPFactory;
+import javax.xml.soap.SOAPMessage;
+
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class SoapClient {
+	public static void main(String[] args) {
+		try {
+//			URI uri = new URI("http://localhost:8080/javainuse/ws/wsdl/helloworld.wsdl");
+//
+//			CloseableHttpClient client = HttpClientBuilder.create().disableContentCompression().build();
+//
+//			HttpPost httpPost = new HttpPost(uri);
+//			HashMap<String, Object> param = new HashMap<String, Object>();
+//
+//			param.put("name", "홍길동");
+//			param.put("age", 110);
+//			param.put("school", "대학대학교");
+//
+////			ObjectMapper paramMapper = new ObjectMapper();
+////			String json = paramMapper.writeValueAsString(param);
+//
+//			httpPost.setHeader("Content-Type", "text/xml");
+////			httpPost.setEntity(new StringEntity(json, "UTF-8"));
+//
+//			CloseableHttpResponse response = client.execute(httpPost);
+//
+//			String content = EntityUtils.toString(response.getEntity(), "UTF-8");
+//
+//			ObjectMapper mapper = new ObjectMapper();
+			
+			
+			
+            URL endPoint = null;
+            endPoint = new URL("http://localhost:8080/javainuse/ws");
+             
+            SOAPConnectionFactory factory = SOAPConnectionFactory.newInstance();
+            SOAPConnection con = factory.createConnection();
+             
+            MessageFactory mFactory = MessageFactory.newInstance();
+            SOAPMessage request = mFactory.createMessage();
+            SOAPBody requestBody = request.getSOAPBody();
+             
+            SOAPFactory fac = SOAPFactory.newInstance();
+             
+            Name requestName = fac.createName("strRequestArg", "chsb", "http://systinet.com/xsd/SchemaTypes/");
+             
+            SOAPBodyElement requestElement = requestBody.addBodyElement(requestName);
+            requestElement.addTextNode(xmlMessage);
+             
+            SOAPMessage response = con.call(request, endPoint); 
+            con.close();
+             
+            SOAPBody responseBody = response.getSOAPBody();
+             
+            Iterator it = responseBody.getChildElements();
+            SOAPBodyElement responseElement =(SOAPBodyElement)it.next();
+ 
+            responseMessage =responseElement.getValue();
+             
+            System.out.println("responseMessage" + responseMessage);
+//            LOGGER.info("Received CHSB Response: "+responseMessage);
+             
+			
+
+//			if (response.getStatusLine().getStatusCode() == HttpServletResponse.SC_OK) {
+//				System.out.println(" ● 성공 >> " + content);
+//			} else {
+//				System.out.println(" ● 실패 >> " + content);
+//			}
+		} catch (Exception e) {
+			System.out.println("● ● ● ● ● ● ● ● ● ● ● ● ● 에 러 에 러  ● ● ● ● ● ● ● ● ● ● ● ● ● ●");
+			e.printStackTrace();
+		}
+
+	}
+}

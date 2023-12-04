@@ -1,0 +1,7 @@
+package com.clients.soap;
+
+public class SoapClient {
+	public static void main(String[] args) {
+		
+	}
+}
