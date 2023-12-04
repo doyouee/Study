@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.soap.soapListener.EmployeeServiceImpl"/>
+<fullyQualifiedTypeName name="org.json.JSONMLParserConfiguration"/>
+<fullyQualifiedTypeName name="org.json.JSONObject"/>
+<fullyQualifiedTypeName name="org.json.simple.parser.JSONParser"/>
+<fullyQualifiedTypeName name="javax.xml.soap.SOAPConnectionFactory"/>
+<fullyQualifiedTypeName name="javax.xml.soap.SOAPConnection"/>
+<fullyQualifiedTypeName name="javax.xml.soap.MessageFactory"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="javax.xml.soap.SOAPBodyElement"/>
+<fullyQualifiedTypeName name="javax.xml.soap.Name"/>
+<fullyQualifiedTypeName name="javax.xml.soap.SOAPBody"/>
+<fullyQualifiedTypeName name="java.net.URLConnection"/>
+<fullyQualifiedTypeName name="java.net.HttpURLConnection"/>
+<fullyQualifiedTypeName name="javax.xml.soap.SOAPException"/>
+<fullyQualifiedTypeName name="javax.xml.soap.MimeHeaders"/>
+<fullyQualifiedTypeName name="java.io.OutputStream"/>
+<fullyQualifiedTypeName name="java.io.DataOutputStream"/>
+<fullyQualifiedTypeName name="java.io.PrintStream"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.io.OutputStreamWriter"/>
+<fullyQualifiedTypeName name="java.io.BufferedWriter"/>
+<fullyQualifiedTypeName name="javax.xml.soap.SOAPEnvelope"/>
+<fullyQualifiedTypeName name="java.io.ByteArrayOutputStream"/>
+<fullyQualifiedTypeName name="java.io.ByteArrayInputStream"/>
+<fullyQualifiedTypeName name="javax.xml.transform.stream.StreamSource"/>
+<fullyQualifiedTypeName name="javax.xml.soap.SOAPMessage"/>
+<fullyQualifiedTypeName name="java.lang.StringBuffer"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="javax.xml.soap.SOAPElement"/>
+</qualifiedTypeNameHistroy>
