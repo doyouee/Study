@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: spring-boot-soap
+Bundle-SymbolicName: spring-boot-soap
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com.javainuse,
+ com.javainuse.config,
+ com.javainuse.endpoint
