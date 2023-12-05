@@ -1,0 +1,20 @@
+package com.websocket.client;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+public class Client {
+
+	public static void main(String[] args) throws IOException {
+		// client -> listener
+		Socket socket = new Socket("localhost", 5555);
+		DataOutputStream cdout = new DataOutputStream(socket.getOutputStream());
+		cdout.writeUTF("Hello Server");
+		
+		// listener -> client
+		DataInputStream cdin = new DataInputStream(socket.getInputStream());
+		
+	}
+}

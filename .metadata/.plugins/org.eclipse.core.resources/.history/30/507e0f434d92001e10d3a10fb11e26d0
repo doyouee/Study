@@ -1,0 +1,22 @@
+package com.websocket.basic.BasicClient;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+public class Client {
+
+	public static void main(String[] args) throws IOException {
+		// client -> listener
+		Socket socket = new Socket("localhost", 5555); // 클라이언트 자기 주소 + 포트번호
+		DataOutputStream cdout = new DataOutputStream(socket.getOutputStream());
+		cdout.writeUTF("Hello Server");
+		
+		// listener -> client
+		DataInputStream cdin = new DataInputStream(socket.getInputStream());
+		System.out.println(cdin.readUTF()); // server에서 보낸 data가 찍힘
+		
+		socket.close();
+	}
+}

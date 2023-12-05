@@ -1,0 +1,5 @@
+package com.websocket.ecoserver.client;
+
+public class EchoServerEx {
+
+}
