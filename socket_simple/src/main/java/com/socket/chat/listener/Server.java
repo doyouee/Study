@@ -18,10 +18,10 @@ public class Server {
         Scanner sc = new Scanner(System.in);
 
         try {
-            serverSocket = new ServerSocket(5555);
+            serverSocket = new ServerSocket(5555); // 지정한 포트번호로 socket-server 열어둔다.
             System.out.println("** 연결 대기 중입니다. **");
 
-            socket = serverSocket.accept();
+            socket = serverSocket.accept(); // 연결 요청이 들어오면 수락하고 새 Socket 객체를 반환한다.
             System.out.println("** 연결이 완료되었습니다. **");
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

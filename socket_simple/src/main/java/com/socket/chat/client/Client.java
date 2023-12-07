@@ -28,21 +28,21 @@ public class Client {
                 String outMsg = sc.nextLine(); // 키보드 입력 값을 String에 담기
 
                 if (outMsg.contains("종료")) {
-                    out.write("** 연결이 종료되었습니다. **");
+                    out.write("** 연결이 종료되었습니다. **"); 
                     out.flush(); // 스트림을 닫지 않은 상태에서 바이트를 보내고 싶은 경우, 스트림을 플러쉬
                     System.out.println("** 연결이 종료되었습니다. **");
                     break;
                 }
 
                 out.write(outMsg + "\n");
-                out.flush(); // 스트림을 닫지 않은 상태에서 바이트를 보내고 싶은 경우, 스트림을 플러쉬
+                out.flush(); // 스트림을 닫지 않은 상태에서 바이트를 모두 보내고 싶은 경우_스트림 플러쉬
 
                 String inMsg = in.readLine();
                 System.out.println("상대방 : " + inMsg);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
+        } finally { // 수행이 끝난 후 모두 닫아준다.
             try {
                 sc.close();
                 out.close();
