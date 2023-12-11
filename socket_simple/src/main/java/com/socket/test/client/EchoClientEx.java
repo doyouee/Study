@@ -64,7 +64,7 @@ public class EchoClientEx {
 				receiveData = (String)ois.readObject();
 				
 				//4-3. 서버로부터 메아리처럼 보낸 데이터를 다시 받아서 출력
-				System.out.println(client.getInetAddress()+"로부터 받은 메시지 (에코 됨) : " + receiveData);
+				System.out.println(client.getInetAddress()+"로부터 받은 메시지 >>> " + receiveData);
 			    System.out.print("입력 >>> ");
 			}
 		} catch(Exception e){
