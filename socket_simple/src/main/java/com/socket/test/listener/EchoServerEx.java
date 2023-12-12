@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,18 +48,22 @@ public class EchoServerEx {
 			// 4-2. 스트림을 통해 데이터를 읽어옴
 			while((receiveData = (String)ois.readObject()) != null) {
 				System.out.println("Client로부터 받은 Data : " + receiveData);
-//				if(receiveData.equals("quit") || "죵료".equals(receiveData))	break;
-				
 				extractData(receiveData); // 데이터 처리 메서드
-				
-				if("0038TEST01ABC한글SDFASDFGHDSUIFASD123123".contains(receiveData)) {
-					oos.writeObject("00042000" + " // Data : " + inputData);
-					oos.flush();
-				} else {
-					//5-2. 클라이언트로 부터 받은 데이터를 클라이언트에게 다시 전송함-> 에코:메아리
-					oos.writeObject(receiveData + " // Data : " + inputData);
-					oos.flush();
+				for(int i=0; i<inputData.size(); i++) {
+					String set = inputData.get(i).substring(4,6);
+					if("01".equals(set)){
+						oos.writeObject("00042000");
+						oos.flush();
+					}
 				}
+//				if(inputData.contains("0038TEST01ABC한글SDFASDFGHDSUIFASD123123")) {
+//					oos.writeObject("00042000" + " / 데이터 : " + inputData);
+//					oos.flush();
+//				} else {
+//					//5-2. 클라이언트로 부터 받은 데이터를 클라이언트에게 다시 전송함
+//					oos.writeObject(receiveData + " / 데이터 : " + inputData);
+//					oos.flush();
+//				}
 			}
 		} catch(Exception e) { //예외가 발생하면
 			e.printStackTrace(); //에러 메시지를 출력하고
@@ -76,11 +79,10 @@ public class EchoServerEx {
 		}
 	}
 	
-	public List<String> extractData(String receiveData) { // 데이터 정제
+	public void extractData(String receiveData) { // 데이터 정제
 		int count = 0;
-		Integer byteLength = Integer.parseInt(receiveData.substring(0, 4)); // Data 맨 앞의 숫자 4자리는 Data Byte 크기
-
-		while(receiveData.toString().getBytes().length > byteLength) {  // receiveData의 Byte 길이가 byteLength 길이보다 긴 동안
+		int byteLength = Integer.parseInt(receiveData.substring(0, 4)); // Data 맨 앞의 숫자 4자리는 Data Byte 크기
+		while(receiveData.getBytes().length > byteLength) {  // receiveData의 Byte 길이가 byteLength 길이보다 긴 동안
 			StringBuilder stringbuilder = new StringBuilder(byteLength);
 			for(char ch : receiveData.substring(4).toString().toCharArray()) {
 				count += String.valueOf(ch).getBytes().length;
@@ -88,10 +90,10 @@ public class EchoServerEx {
 				if(count >= byteLength) break;
 			}
 			/*
-			 * 0038TEST01ABC한글SDFASDFGHDSUIFASD123123  -> 응답값 : 00042000
+			 * 0038ABCD01ABC한글SDFASDFGHDSUIFASD123123  -> 응답값 : 00042000
 			 * 0038TEST99ABC한글SDFASDFGHDSUIFASD123123
 			 *
-			 * 0005밤1b0001a0003양0002dd0008안뇽11
+			 * 0038TEST01ABC한글SDFASDFGHDSUIFASD1231230005밤1b0001a
 			 */
 			receiveData = receiveData.substring(4).replace(stringbuilder, "");
 			count = 0;
@@ -100,7 +102,6 @@ public class EchoServerEx {
 			byteLength = Integer.parseInt(receiveData.substring(0, 4));
 		}
 		System.out.println("전체 inputData : " + inputData);
-		return inputData;
 	}
 
 	public static void main(String[] args) {

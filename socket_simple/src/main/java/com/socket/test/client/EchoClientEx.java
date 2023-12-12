@@ -63,7 +63,7 @@ public class EchoClientEx {
 				//4-2. 스트림을 통해 데이터를 읽어옴
 				receiveData = (String)ois.readObject();
 				
-				//4-3. 서버로부터 메아리처럼 보낸 데이터를 다시 받아서 출력
+				//4-3. 서버로부터 보낸 데이터를 다시 받아서 출력
 				System.out.println(client.getInetAddress()+"로부터 받은 메시지 >>> " + receiveData);
 			    System.out.print("입력 >>> ");
 			}
@@ -82,11 +82,5 @@ public class EchoClientEx {
 		}
 	}
 
-	public static void main(String[] args) {
-		//원래는 다른 컴퓨터에서 서버를 돌려야 하지만 지금은 개념 파악을 위해서 하나의 컴퓨터에서 서버와 클라이언트를 돌리고 있음
-		new EchoClientEx("localhost", 5000);//포트 번호 5000을 오픈한다.
-		
-		//물론 두 대의 컴퓨터에서 돌려도 된다.
-		//"localhost" 대신 에코 서버가 실행되는 컴퓨터의 아이피 주소를 입력한다.
-	}
+	public static void main(String[] args) {	new EchoClientEx("localhost", 5000);	}
 }
