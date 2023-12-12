@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EchoClientEx {
 	String ipAddress; //접속을 요청할 서버의 아이피 주소와
@@ -22,15 +24,13 @@ public class EchoClientEx {
 	String receiveData; //서버로부터 받은 데이터를 저장하기 위한 변수
 	
 	//생성자는 접속할 서버의 아이피와 포트 번호를 전달 받음
-	public EchoClientEx(String ip, int p) {
-		ipAddress=ip;
-		port=p;
+	public EchoClientEx(String ip, int port) {
 		try {
 			System.out.println("**** 클라이언트*****");
 			System.out.println("**************************");
 			
 			//1.접속할 서버의 아이피 주소와 포트를 이용해서 클라이언트 소켓 생성
-			client = new Socket(ipAddress, port);
+			client = new Socket(ip, port);
 			
 			//클라이언트 소켓이 생성되는 순간 서버의 accept 메서드가 수행된다.
 			
@@ -59,13 +59,24 @@ public class EchoClientEx {
 				oos.flush();
 				if(sendData.equals("quit") || "종료".equals(sendData))
 					break;
-				
 				//4-2. 스트림을 통해 데이터를 읽어옴
-				receiveData = (String)ois.readObject();
-				
+				receiveData = (String) ois.readObject();
 				//4-3. 서버로부터 보낸 데이터를 다시 받아서 출력
-				System.out.println(client.getInetAddress()+"로부터 받은 메시지 >>> " + receiveData);
-			    System.out.print("입력 >>> ");
+				System.out.println( /*client.getInetAddress()+"의 응답 : " + */ receiveData);
+				System.out.print("입력 >>> ");
+/*				while(true) {
+//					//소켓으로부터 데이터 받아오기
+//					try {
+//						BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+//						receiveData = in.readLine();
+//					}catch(Exception e) {
+//						break;
+//					}
+//					if(receiveData!=null) {
+//						System.out.println("응답 코드 : " + receiveData);
+//					}
+//				}
+*/
 			}
 		} catch(Exception e){
 			e.printStackTrace(); //에러 메시지를 출력하고

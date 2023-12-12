@@ -1,10 +1,6 @@
 package com.socket.test.listener;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -44,26 +40,23 @@ public class EchoServerEx {
 			
 			// 5_1. 출력 스트림을 ObjectOutputStream으로 변환한다.
 			oos = new ObjectOutputStream(os);
-			
+
 			// 4-2. 스트림을 통해 데이터를 읽어옴
 			while((receiveData = (String)ois.readObject()) != null) {
+				StringBuilder res = new StringBuilder();
 				System.out.println("Client로부터 받은 Data : " + receiveData);
 				extractData(receiveData); // 데이터 처리 메서드
 				for(int i=0; i<inputData.size(); i++) {
-					String set = inputData.get(i).substring(4,6);
-					if("01".equals(set)){
-						oos.writeObject("00042000");
-						oos.flush();
+					if(inputData.get(i).substring(4,6).equals("01")) {
+						res.append("[00042000]");
+					} else {
+						res.append("");
+//						oos.writeObject("");
 					}
 				}
-//				if(inputData.contains("0038TEST01ABC한글SDFASDFGHDSUIFASD123123")) {
-//					oos.writeObject("00042000" + " / 데이터 : " + inputData);
-//					oos.flush();
-//				} else {
-//					//5-2. 클라이언트로 부터 받은 데이터를 클라이언트에게 다시 전송함
-//					oos.writeObject(receiveData + " / 데이터 : " + inputData);
-//					oos.flush();
-//				}
+				oos.writeObject(res.toString());
+				oos.flush();
+				inputData.clear();
 			}
 		} catch(Exception e) { //예외가 발생하면
 			e.printStackTrace(); //에러 메시지를 출력하고
@@ -79,26 +72,23 @@ public class EchoServerEx {
 		}
 	}
 	
-	public void extractData(String receiveData) { // 데이터 정제
+	public void extractData(String receiveData) throws IOException { // 데이터 정제
 		int count = 0;
 		int byteLength = Integer.parseInt(receiveData.substring(0, 4)); // Data 맨 앞의 숫자 4자리는 Data Byte 크기
-		while(receiveData.getBytes().length > byteLength) {  // receiveData의 Byte 길이가 byteLength 길이보다 긴 동안
+		while(receiveData.getBytes().length >= byteLength) {  // receiveData의 Byte 길이가 byteLength 길이보다 긴 동안
 			StringBuilder stringbuilder = new StringBuilder(byteLength);
-			for(char ch : receiveData.substring(4).toString().toCharArray()) {
+			for(char ch : receiveData.substring(4).toCharArray()) {
 				count += String.valueOf(ch).getBytes().length;
 				stringbuilder.append(ch); // sringbuilder 에는 실제 데이터만 담긴다. ex)밤1b
 				if(count >= byteLength) break;
 			}
-			/*
-			 * 0038ABCD01ABC한글SDFASDFGHDSUIFASD123123  -> 응답값 : 00042000
-			 * 0038TEST99ABC한글SDFASDFGHDSUIFASD123123
-			 *
-			 * 0038TEST01ABC한글SDFASDFGHDSUIFASD1231230005밤1b0001a
-			 */
-			receiveData = receiveData.substring(4).replace(stringbuilder, "");
+
+			byte[] remainingBytes = new byte[receiveData.getBytes().length - byteLength - 4]; // 남은 데이터를 담을 바이트 배열 생성 // 첫 번째 데이터 제거
+			System.arraycopy(receiveData.getBytes(), byteLength + 4, remainingBytes, 0, remainingBytes.length); // 첫 번째 데이터를 제외한 데이터를 새로운 배열에 복사
+			receiveData = new String(remainingBytes); // 바이트 배열을 문자열로 변환
 			count = 0;
 			inputData.add(stringbuilder.toString());
-			if(receiveData.length()<4) {	break;	}
+			if(receiveData.length()<5) {	break;	}
 			byteLength = Integer.parseInt(receiveData.substring(0, 4));
 		}
 		System.out.println("전체 inputData : " + inputData);
@@ -108,3 +98,10 @@ public class EchoServerEx {
 		new EchoServerEx(5000); // 포트 번호 5000을 오픈
 	}
 }
+
+/*
+ * 0038TEST01ABC한글SDFASDFGHDSUIFASD123123  -> 응답값 : 00042000
+ * 0038TEST99ABC한글SDFASDFGHDSUIFASD123123
+ *
+ * 0038TEST01ABC한글SDFASDFGHDSUIFASD1231230038TEST01ABC한글SDFASDFGHDSUIFASD123123
+ */
