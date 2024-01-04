@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Document</title>
+    <style>
+        div{
+            width: 80px;
+            height: 80px;
+            border: 1px solid rgb(255, 160, 150);
+        }
+        #contentBox{
+            box-sizing: content-box;
+            color: plum;
+            background-color: aliceblue;
+        }
+        #borderBox{
+            box-sizing: border-box;
+            color: rgb(114, 218, 149);
+            background-color: cornsilk;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="contentBox">박스 1</div>
+    <div>박스 2</div> <!-- 기본 css 옵션은 contentBox와 유사 -->
+    <div id="borderBox">박스 3</div>
+    <!-- 
+        이렇게 따로하면 서로 크기가 다르니까
+        <style> 에서 
+        *{            
+        } 
+        으로 설정해서 공통으로 맞춰주는 것도 방법이다. -->
+</body>
+</html>
