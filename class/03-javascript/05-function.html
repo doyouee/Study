@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Function</title>
+    <!-- 여기에 바로 JavaScript를 지정하는 방식 !
+    <script>
+        function auth() {
+            const token = String(Math.floor(Math.random() * 1000000)).padStart(6, "0")
+            document.getElementById("target").innerText = token
+            document.getElementById("target").style.color = "#" + token
+        }
+    </script> 
+    -->
+    <!-- .js 파일을 연결해서 지정하는 방식 -->
+    <script src="./05-function.js"></script>
+</head>
+<body>
+    <div id="target">000000</div>
+    <button onclick="auth()">인증번호 전송</button>
+</body>
+</html>
