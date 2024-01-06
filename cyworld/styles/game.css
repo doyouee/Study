@@ -90,25 +90,35 @@ html, body {
 }
 
 .search {
-    font-size: 11px;
-    font-weight: 700;
     width: 38px;
     height: 24px;
 }
 
-.search, .draw {
+.search, .game__lotto__button {
     background-color: white;
     border: 1px solid black;
     border-radius: 15%;
+    font-size: 11px;
+    font-weight: 700; 
 }
 
-.lotto__draw {
-    font-size: 13px;
-    padding: 2px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: 10px;
+.game__lotto__draw {
+    width: 130px;
+    height: 21px;
+    font-size: 10px;
+    font-weight: 700;
     border: 1px solid black;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: rgb(255, 236, 128);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 8px;
+    margin-top: 10px;
+    margin-bottom: 11px;
+}
+
+.game__lotto__button {
+    width: 52px;
+    height: 24px;
 }
