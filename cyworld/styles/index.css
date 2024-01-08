@@ -170,3 +170,27 @@ iframe {
     height: 100%;
     border: none;
 }
+
+.navigation {
+    width: 62px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute; /* 아래에 수치로 절대적인 위치를 설정한다.*/
+    left: 784px;
+    top: 105px;
+}
+
+.navigation__item {
+    width: 60px;
+    height: 30px;
+    background-color: #298eb5;
+    border: 1px solid black;
+    color: white;
+    border-radius: 0px 10px 10px 0px; /* 왼쪽상단 모서리부터 시게방향으로 설정 */
+    font-size: 10px;
+    text-align: center;
+    line-height: 30px; /* 글씨 써진 줄 높이 */
+    cursor: pointer;
+}
