@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+}
+
+body { /*html 전체 페이지를 나타냄*/   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+#start-btn {
+    background-color: honeydew;
+    border: 3px double rgb(165, 165, 165);
+    border-radius: 2rem;
+    color: steelblue;
+    font-size: 1rem;
+    margin-top: 1.3rem;
+}
+
+#day-counter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1.6rem;
+}
+
+.day-counter-child {
+    text-align: center;
+    margin-right: 1rem;
+}
+
+.day-counter-child span {
+    font-size: 1.3rem;
+}
+
+#target-selector {
+    margin-top: 0.5rem;
+}
+
+.target-input {
+    border: 1px solid gray;
+    border-radius: 5px;
+}
