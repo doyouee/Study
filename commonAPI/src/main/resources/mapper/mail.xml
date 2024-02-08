@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper SYSTEM "dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inzent.commonAPI.mapper.MailMapper">
+	<!-- 메일 템플릿 조회 -->
+    <select id="getMailTemplate" parameterType="java.util.Map" resultType="com.inzent.commonAPI.vo.MailInfoVO">
+    	SELECT
+    		M.*
+		FROM
+			MAIL_INFO M,
+			API_INFO A
+		WHERE
+			M.SUB_SYSTEM = A.API_ID
+			AND A.API_KEY = #{api_key}
+    </select>
+    
+    <!-- 메일 전송 이력 저장 -->
+    <insert id="setMailHistory" parameterType="com.inzent.commonAPI.vo.MailHistoryVO">
+    	<selectKey keyProperty="mail_history_id" resultType="String" order="BEFORE">
+		    SELECT 'H' || TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3') FROM dual
+		</selectKey>
+    	INSERT INTO MAIL_HISTORY
+    	VALUES(#{mail_history_id}, #{mail_title}, #{mail_reciever}, #{mail_content}, #{mail_status}, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'))
+    </insert>
+</mapper>

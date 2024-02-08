@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper SYSTEM "dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inzent.commonAPI.mapper.CommonCodeGroupMapper">
+    <!-- 전체 공통코드그룹 조회 -->
+    <select id="inquiry" resultType="map">
+        SELECT * FROM COMMON_CODE_GROUP
+    </select>
+    <!-- 공통코드그룹 그룹ID 중복조회 -->
+    <select id="idDuplication" resultType="int">
+        SELECT COUNT(*) FROM COMMON_CODE_GROUP WHERE CODE_GROUP_ID = #{code_group_id}
+    </select>
+    <!-- 공통코드그룹 그룹명 중복조회 -->
+    <select id="nameDuplication" resultType="int">
+        SELECT COUNT(*) FROM COMMON_CODE_GROUP WHERE CODE_GROUP_NAME = #{code_group_name}
+    </select>
+
+    <!-- 공통코드그룹 등록 -->
+    <insert id="registration" >
+
+        INSERT INTO COMMON_CODE_GROUP
+        (CODE_GROUP_ID, CODE_GROUP_NAME, SUB_SYSTEM)
+        VALUES(#{group.code_group_id}, #{group.code_group_name}, #{group.sub_system})
+
+    </insert>
+
+    <!-- 공통코드그룹 수정 (code_id 기준) -->
+    <update id="update">
+        UPDATE COMMON_CODE_GROUP
+        SET CODE_GROUP_NAME=#{group.code_group_name}, SUB_SYSTEM=#{group.sub_system}
+        WHERE CODE_GROUP_ID=#{group.code_group_id}
+
+    </update>
+
+    <!-- 공통코드그룹 삭제 (code_id 기준) -->
+    <delete id="delete">
+        DELETE FROM COMMON_CODE_GROUP
+        WHERE
+        (
+        SELECT COUNT(*)
+        FROM COMMON_CODE
+        WHERE CODE_GROUP_ID IN (#{group.code_group_id})) = 0
+        AND CODE_GROUP_ID=#{group.code_group_id}
+    </delete>
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper SYSTEM "dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inzent.commonAPI.mapper.CommonCodeMapper">
+    <!-- 전체 공통코드 조회 -->
+    <select id="inquiry" resultType="map">
+        SELECT * FROM COMMON_CODE
+    </select>
+
+    <!-- 공통코드 그룹을 포함한 전체 공통코드 조회  -->
+    <select id="groupInquiry" resultType="map">
+        SELECT C.CODE_ID, C.CODE_NAME, C.CODE_GROUP_ID, C.CODE_TOP_ID, G.CODE_GROUP_NAME, G.SUB_SYSTEM
+        FROM COMMON_CODE C INNER JOIN COMMON_CODE_GROUP G
+        ON  C.CODE_GROUP_ID  = G.CODE_GROUP_ID
+
+    </select>
+
+    <!-- 하나의 공통코드ID와 동일한 공통 그룹을 가지고 있는 모든 리스트 출력  -->
+    <select id="codeInquiry" resultType="map">
+        SELECT * FROM COMMON_CODE WHERE CODE_GROUP_ID = ( SELECT CODE_GROUP_ID FROM COMMON_CODE
+        WHERE CODE_ID = #{code_id} )
+    </select>
+    <!-- 상위 공통코드 조회 -->
+    <select id="topInquiry" resultType="map">
+        SELECT *
+        FROM COMMON_CODE
+        WHERE CODE_TOP_ID IS NULL
+    </select>
+
+    <!-- 공통코드 등록 -->
+    <insert id="registration" >
+        <selectKey keyProperty="code_id" resultType="String" order="BEFORE">
+            SELECT   'C' || TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3') FROM dual
+        </selectKey>
+        INSERT INTO COMMON_CODE
+        (CODE_ID, CODE_NAME, CODE_GROUP_ID, CODE_TOP_ID)
+        VALUES(#{code_id}, #{code.code_name}, #{code.code_group_id}, #{code.code_top_id})
+
+    </insert>
+
+    <!-- 공통코드 수정 (code_id 기준) -->
+    <update id="update">
+        UPDATE COMMON_CODE
+        SET CODE_NAME=#{code.code_name}, CODE_GROUP_ID=#{code.code_group_id}, CODE_TOP_ID=#{code.code_top_id}
+        WHERE CODE_ID=#{code.code_id}
+    </update>
+
+    <!-- 공통코드 삭제 (code_id 기준) -->
+    <delete id="delete">
+
+        DELETE FROM COMMON_CODE
+        WHERE
+        (
+        SELECT COUNT(*)
+        FROM COMMON_CODE
+        WHERE CODE_TOP_ID  =#{code.code_id}) = 0
+        AND CODE_ID =#{code.code_id}
+
+
+    </delete>
+</mapper>
