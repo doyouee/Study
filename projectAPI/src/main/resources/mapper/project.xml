@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inzent.projectAPI.mapper.ProjectMapper">
+    <update id="editInspection" parameterType="com.inzent.projectAPI.vo.ProjectInspectionVO">
+        UPDATE PROJECT SET
+        inspection_status = #{inspection_status},
+        inspection_date = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+        inspection_user_id = #{inspection_user_id},         -- // TO-DO : userId, userName을 USER TABLE 에서 받아와서 수정
+        inspection_user_name = #{inspection_user_name},
+        inspection_rejection_reason = CASE
+        WHEN #{inspection_status} = '2' THEN ''
+        WHEN #{inspection_status} = '3' THEN #{inspection_rejection_reason, jdbcType=VARCHAR} END
+        WHERE project_id = #{project_id}
+    </update>
+
+    <select id="getProjectName" resultType="String">
+        SELECT PROJECT.project_name  FROM PROJECT WHERE project_id = #{projectId}
+    </select>
+
+    <select id="searchProject" resultType="map">
+        SELECT * FROM PROJECT
+        WHERE 1=1
+        <if test="project_id != null and !project_id.equals('')">
+            AND PROJECT_ID LIKE '%' || #{project_id} || '%'
+        </if>
+        <if test="project_name != null and !project_name.equals('')">
+            AND project_name LIKE '%' || #{project_name} || '%'
+        </if>
+        <if test="team_id != null and !team_id.equals('')">
+            AND team_id LIKE '%' || #{team_id} || '%'
+        </if>
+        <if test="inspection_status != null">
+            AND inspection_status LIKE #{inspection_status}
+        </if>
+<!--        <if test="project_name != null and project_name != ''">-->
+<!--            AND PROJECT_NAME LIKE '%' || #{project_name} || '%'-->
+<!--        </if>-->
+<!--        <if test="team_id != null and team_id != ''">-->
+<!--            AND TEAM_ID LIKE '%' || #{team_id} || '%'-->
+<!--        </if>-->
+<!--        <if test="inspection_status != null and inspection_status != ''">-->
+<!--            AND INSPECTION_STATUS LIKE '%' || #{inspection_status} || '%'-->
+<!--        </if>-->
+    </select>
+</mapper>

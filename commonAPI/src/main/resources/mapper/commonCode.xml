@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper SYSTEM "dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inzent.commonAPI.mapper.CommonCodeMapper">
+    <select id="inquiry" resultType="map">
+        SELECT * FROM COMMON_CODE
+    </select>
+
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inzent.deliverablesAPI.mapper.DeliverablesRegMapper">
+    <!--  산출물 등록 기능 변경 변수명  -->
+    <resultMap id="registerMap" type="com.inzent.deliverablesAPI.vo.DeliverablesRegVO">
+        <result column="REGISTRATION_ID" property="registerId" />
+        <result column="PROJECT_ID" property="projectId" />
+        <result column="DELIVERABLES_ID" property="deliverId" />
+        <result column="CONTENT_TYPE" property="contentType" />
+        <result column="DELIVERABLES_TITLE" property="deliverTitle" />
+        <result column="FILE_NAME" property="fileName" />
+        <result column="FILE_PATH" property="filePath" />
+        <result column="TEXT_CONTENTS" property="textContents" />
+        <result column="NOT_REGISTRATION_REASON" property="notRegisReason" />
+        <result column="REGISTRATION_USER_ID" property="regisUserId" />
+        <result column="REGISTRATION_USER_NAME" property="regisUserName" />
+        <result column="REGISTRATION_DATE" property="regisDate" />
+        <result column="DELETE_USER_ID" property="deleteUserId" />
+        <result column="DELETE_USER_NAME" property="deleteUserName" />
+        <result column="DELETE_DATE" property="deleteDate" />
+    </resultMap>
+
+    <!--  산출물 등록 기능  -->
+    <!--등록된 산출물 조회 (GET)-->
+    <select id="getReg" resultMap="registerMap">
+        SELECT * FROM DELIVERABLES_REGISTRATION
+    </select>
+
+    <!--특정 등록된 산출물 조회 (GET)-->
+    <select id="getRegOne" resultMap="registerMap">
+        SELECT * FROM DELIVERABLES_REGISTRATION WHERE REGISTRATION_ID = #{id}
+    </select>
+
+    <!--산출물 목록의 디렉터리 또는 파일 등록 (POST)-->
+    <insert id="postReg" >
+        INSERT INTO DELIVERABLES_REGISTRATION (REGISTRATION_ID, PROJECT_ID, DELIVERABLES_ID, CONTENT_TYPE, DELIVERABLES_TITLE, FILE_NAME, FILE_PATH, TEXT_CONTENTS, NOT_REGISTRATION_REASON, REGISTRATION_USER_ID, REGISTRATION_USER_NAME, REGISTRATION_DATE, DELETE_USER_ID, DELETE_USER_NAME, DELETE_DATE)
+        VALUES (#{regiId, jdbcType=VARCHAR}, #{regis.projectId, jdbcType=VARCHAR}, #{regis.deliverId, jdbcType=VARCHAR}, #{regis.contentType, jdbcType=CHAR}, #{regis.deliverTitle, jdbcType=VARCHAR}, #{filename, jdbcType=VARCHAR}, #{filePath, jdbcType=VARCHAR}, #{regis.textContents, jdbcType=CLOB}, #{regis.notRegisReason, jdbcType=VARCHAR}, #{regis.regisUserId, jdbcType=VARCHAR}, #{regis.regisUserName, jdbcType=VARCHAR}, #{regis.regisDate, jdbcType=VARCHAR}, #{regis.deleteUserId, jdbcType=VARCHAR}, #{regis.deleteUserName, jdbcType=VARCHAR}, #{regis.deleteDate, jdbcType=VARCHAR})
+    </insert>
+
+    <!--산출물 목록의 디렉토리 또는 파일 수정 (PUT)-->
+    <update id="putReg" >
+        UPDATE DELIVERABLES_REGISTRATION set PROJECT_ID=#{regis.projectId, jdbcType=VARCHAR}, DELIVERABLES_ID=#{regis.deliverId, jdbcType=VARCHAR}, CONTENT_TYPE=#{regis.contentType, jdbcType=CHAR}, DELIVERABLES_TITLE=#{regis.deliverTitle, jdbcType=VARCHAR}, FILE_NAME=#{regis.fileName, jdbcType=VARCHAR}, FILE_PATH=#{regis.filePath, jdbcType=VARCHAR}, TEXT_CONTENTS=#{regis.textContents, jdbcType=CLOB}, NOT_REGISTRATION_REASON=#{regis.notRegisReason, jdbcType=VARCHAR}, REGISTRATION_USER_ID=#{regis.regisUserId, jdbcType=VARCHAR}, REGISTRATION_USER_NAME=#{regis.regisUserName, jdbcType=VARCHAR}, REGISTRATION_DATE=#{regis.regisDate, jdbcType=VARCHAR}, DELETE_USER_ID=#{regis.deleteUserId, jdbcType=VARCHAR}, DELETE_USER_NAME=#{regis.deleteUserName, jdbcType=VARCHAR}, DELETE_DATE=#{regis.deleteDate, jdbcType=VARCHAR}
+        where REGISTRATION_ID=#{regis.registerId, jdbcType=VARCHAR}
+    </update>
+
+    <!--DB 내 삭제 파일의 데이터 삭제 (DELETE)-->
+    <delete id="deleteReg">
+        DELETE FROM DELIVERABLES_REGISTRATION WHERE REGISTRATION_ID IN (
+        <foreach collection="deleteList" item="item" separator=",">
+            #{item}
+        </foreach>)
+    </delete>
+
+    <!-- 선택한 파일의 경로명, 파일명 불러오기 (DELETE)-->
+    <select id="deleteFileInfo">
+        SELECT FILE_NAME AS "filename", FILE_PATH AS "filepath" FROM DELIVERABLES_REGISTRATION
+        WHERE REGISTRATION_ID IN (
+        <foreach collection="deleteList" item="item" separator=",">
+            #{item}
+        </foreach>)
+    </select>
+</mapper>

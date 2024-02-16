@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper SYSTEM "dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inzent.commonAPI.mapper.CommonMapper">
+    <select id="apiInfo" resultType="map">
+        SELECT * FROM API_INFO
+    </select>
+    <select id="apiExistence" resultType="String">
+        SELECT
+        CASE WHEN Count(*)>0 THEN 'true' ELSE 'false' END Result
+        FROM DMS_CMN.API_INFO
+        WHERE API_KEY IN (#{api_key})
+
+    </select>
+</mapper>
